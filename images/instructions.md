@@ -3,17 +3,16 @@
 
 ### First: Download and extract
 
-Download all parts (88)
-
+Download all parts.
 
 To extract them, you should first collect the files together:
 ``` 
- zip -F Linux_debian8_3.13_OpenCLRTE16_marianoh_v3.zip --out Linux_debian8_3.13_OpenCLRTE16_marianoh_v3_ORIGINAL.zip
+ cat Linux_debian8_3.13_OpenCLRTE16_marianoh_v2._split.gz* | zcat > Linux_debian8_3.13_OpenCLRTE16_marianoh_v2.zip
 ```
 
 And then, you can simply unzip:
 ```
- unzip Linux_debian8_3.13_OpenCLRTE16_marianoh_v3_ORIGINAL.zip
+ unzip Linux_debian8_3.13_OpenCLRTE16_marianoh_v2.zip
 ```
 
 

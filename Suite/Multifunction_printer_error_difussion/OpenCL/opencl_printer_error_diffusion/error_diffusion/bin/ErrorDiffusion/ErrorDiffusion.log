@@ -1,0 +1,303 @@
+Warning: Unused kernel argument 'channels'
+=========================================================================================================
+                                   *** Optimization Report ***                                        
+ Warning: Compile with "-g" to get line number, variable name, and additional loop information         
+
+Kernels that do not use any work-item built-in functions, such as get_global_id(), are compiled for single
+work-item execution (a task). Otherwise, a kernel is compiled as an ND-Range.
+
+For tasks, the compiler will attempt to pipeline every loop in the kernel to allow multiple iterations of
+the loop to execute concurrently. If some loops are not pipelined, or not pipelined well, you may not get
+good performance.
+
+For ND-Range kernels, the loops are not pipelined. Instead, they are built to accept multiple work-items
+simultaneously. Kernel throughput is usually reduced by the largest total number of iterations of nested
+loops. A large number of threads is usually required to efficiently utilize ND-Range kernels.
+
+=========================================================================================================
+Kernel: errorDiffusion                                                                                   
+=========================================================================================================
+The kernel is compiled for single work-item execution.
+
+Loop Report:
+
+ + Loop "Block1"
+   Pipelined well. Successive iterations are launched every cycle.
+   
+   
+=========================================================================================================
+
++--------------------------------------------------------------------+
+; Estimated Resource Usage Summary                                   ;
++----------------------------------------+---------------------------+
+; Resource                               + Usage                     ;
++----------------------------------------+---------------------------+
+; Logic utilization                      ;   15%                     ;
+; ALUTs                                  ;    8%                     ;
+; Dedicated logic registers              ;    7%                     ;
+; Memory blocks                          ;   14%                     ;
+; DSP blocks                             ;    2%                     ;
++----------------------------------------+---------------------------;
+System name: ErrorDiffusion
+
+2017.04.10.16:16:37 Info: Doing: <b>qsys-script --script=system.tcl --Xmx512M --XX:+UseSerialGC --system-file=system.qsys</b>
+2017.04.10.16:17:29 Info: set_validation_property AUTOMATIC_VALIDATION false
+2017.04.10.16:17:29 Info: add_instance ErrorDiffusion_system ErrorDiffusion_system 
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_clk ErrorDiffusion_system.clock_reset
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_clk2x ErrorDiffusion_system.clock_reset2x
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_reset ErrorDiffusion_system.clock_reset_reset
+2017.04.10.16:17:29 Info: add_connection ErrorDiffusion_system.avm_memgmem0_port_0_0_rw acl_iface.kernel_mem0
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_irq ErrorDiffusion_system.kernel_irq
+2017.04.10.16:17:29 Info: add_instance cra_root cra_ring_root 
+2017.04.10.16:17:29 Info: set_instance_parameter_value cra_root DATA_W 64
+2017.04.10.16:17:29 Info: set_instance_parameter_value cra_root ADDR_W 4
+2017.04.10.16:17:29 Info: set_instance_parameter_value cra_root ID_W 0
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_clk cra_root.clock
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_reset cra_root.reset
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_cra cra_root.cra_slave
+2017.04.10.16:17:29 Info: set_connection_parameter_value acl_iface.kernel_cra/cra_root.cra_slave baseAddress 0x0
+2017.04.10.16:17:29 Info: add_instance avs_errorDiffusion_cra_cra_ring cra_ring_node 
+2017.04.10.16:17:29 Info: set_instance_parameter_value avs_errorDiffusion_cra_cra_ring DATA_W 64
+2017.04.10.16:17:29 Info: set_instance_parameter_value avs_errorDiffusion_cra_cra_ring RING_ADDR_W 4
+2017.04.10.16:17:29 Info: set_instance_parameter_value avs_errorDiffusion_cra_cra_ring CRA_ADDR_W 4
+2017.04.10.16:17:29 Info: set_instance_parameter_value avs_errorDiffusion_cra_cra_ring ID_W 0
+2017.04.10.16:17:29 Info: set_instance_parameter_value avs_errorDiffusion_cra_cra_ring ID 0
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_clk avs_errorDiffusion_cra_cra_ring.clock
+2017.04.10.16:17:29 Info: add_connection acl_iface.kernel_reset avs_errorDiffusion_cra_cra_ring.reset
+2017.04.10.16:17:29 Info: add_connection cra_root.ring_out avs_errorDiffusion_cra_cra_ring.ring_in
+2017.04.10.16:17:29 Info: add_connection avs_errorDiffusion_cra_cra_ring.cra_master ErrorDiffusion_system.avs_errorDiffusion_cra
+2017.04.10.16:17:29 Info: set_connection_parameter_value avs_errorDiffusion_cra_cra_ring.cra_master/ErrorDiffusion_system.avs_errorDiffusion_cra baseAddress 0x0
+2017.04.10.16:17:29 Info: add_connection avs_errorDiffusion_cra_cra_ring.ring_out cra_root.ring_in
+2017.04.10.16:17:29 Info: save_system 
+2017.04.10.16:17:30 Info: 
+********************************************************************************************************************
+
+Use qsys-generate for a simpler command-line interface for generating IP.
+
+Run ip-generate with switch --remove-qsys-generate-warning to prevent this notice from appearing in subsequent runs.
+
+********************************************************************************************************************
+2017.04.10.16:17:36 Progress: Loading ErrorDiffusion/system.qsys
+2017.04.10.16:17:37 Progress: Reading input file
+2017.04.10.16:17:37 Progress: Adding ErrorDiffusion_system [ErrorDiffusion_system 14.0]
+2017.04.10.16:17:39 Progress: Parameterizing module ErrorDiffusion_system
+2017.04.10.16:17:39 Progress: Adding acl_iface [acl_iface_system 1.0]
+2017.04.10.16:17:39 Progress: Reading input file
+2017.04.10.16:17:39 Progress: Adding acl_kernel_clk [acl_kernel_clk_noreconfig 1.0]
+2017.04.10.16:17:43 Progress: Parameterizing module acl_kernel_clk
+2017.04.10.16:17:43 Progress: Adding acl_kernel_interface [acl_kernel_interface_soc 1.0]
+2017.04.10.16:17:46 Progress: Parameterizing module acl_kernel_interface
+2017.04.10.16:17:46 Progress: Adding address_span_extender_kernel [altera_address_span_extender 16.0]
+2017.04.10.16:17:46 Progress: Parameterizing module address_span_extender_kernel
+2017.04.10.16:17:46 Progress: Adding clock_bridge [altera_clock_bridge 16.0]
+2017.04.10.16:17:46 Progress: Parameterizing module clock_bridge
+2017.04.10.16:17:46 Progress: Adding clock_cross_kernel_mem1 [altera_avalon_mm_clock_crossing_bridge 16.0]
+2017.04.10.16:17:46 Progress: Parameterizing module clock_cross_kernel_mem1
+2017.04.10.16:17:46 Progress: Adding config_clk [altera_clock_bridge 16.0]
+2017.04.10.16:17:46 Progress: Parameterizing module config_clk
+2017.04.10.16:17:46 Progress: Adding global_reset [altera_reset_bridge 16.0]
+2017.04.10.16:17:46 Progress: Parameterizing module global_reset
+2017.04.10.16:17:46 Progress: Adding hps [altera_hps 16.0]
+2017.04.10.16:17:47 Progress: Parameterizing module hps
+2017.04.10.16:17:47 Progress: Adding kernel_clk [clock_source 16.0]
+2017.04.10.16:17:47 Progress: Parameterizing module kernel_clk
+2017.04.10.16:17:47 Progress: Adding pipe_stage_host_ctrl [altera_avalon_mm_bridge 16.0]
+2017.04.10.16:17:47 Progress: Parameterizing module pipe_stage_host_ctrl
+2017.04.10.16:17:47 Progress: Adding pll [altera_pll 16.0]
+2017.04.10.16:17:47 Progress: Parameterizing module pll
+2017.04.10.16:17:47 Progress: Adding version_id [version_id 10.0]
+2017.04.10.16:17:47 Progress: Parameterizing module version_id
+2017.04.10.16:17:47 Progress: Building connections
+2017.04.10.16:17:47 Progress: Parameterizing connections
+2017.04.10.16:17:47 Progress: Validating
+2017.04.10.16:17:59 Progress: Done reading input file
+2017.04.10.16:18:02 Progress: Parameterizing module acl_iface
+2017.04.10.16:18:02 Progress: Adding avs_errorDiffusion_cra_cra_ring [cra_ring_node 1.0]
+2017.04.10.16:18:02 Progress: Parameterizing module avs_errorDiffusion_cra_cra_ring
+2017.04.10.16:18:02 Progress: Adding cra_root [cra_ring_root 1.0]
+2017.04.10.16:18:02 Progress: Parameterizing module cra_root
+2017.04.10.16:18:02 Progress: Adding ext_clk_50 [clock_source 16.0]
+2017.04.10.16:18:02 Progress: Parameterizing module ext_clk_50
+2017.04.10.16:18:02 Progress: Building connections
+2017.04.10.16:18:02 Progress: Parameterizing connections
+2017.04.10.16:18:02 Progress: Validating
+2017.04.10.16:18:34 Progress: Done reading input file
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_clk.kernel_clk: The input clock frequency must be known or set by the parent if this is a subsystem.
+2017.04.10.16:19:38 Info: system.acl_iface.acl_kernel_clk.kernel_pll: The legal reference clock frequency is 50.0 MHz..650.0 MHz
+2017.04.10.16:19:38 Info: system.acl_iface.acl_kernel_clk.kernel_pll: Able to implement PLL with user settings
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_clk.kernel_pll: kernel_pll.reconfig_to_pll must be exported, or connected to a matching conduit.
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_clk.kernel_pll: kernel_pll.reconfig_from_pll must be exported, or connected to a matching conduit.
+2017.04.10.16:19:38 Info: system.acl_iface.hps: HPS Main PLL counter settings: n = 0  m = 63
+2017.04.10.16:19:38 Info: system.acl_iface.hps: HPS peripherial PLL counter settings: n = 0  m = 39
+2017.04.10.16:19:38 Info: system.acl_iface.pll: The legal reference clock frequency is 5.0 MHz..650.0 MHz
+2017.04.10.16:19:38 Info: system.acl_iface.pll: Able to implement PLL with user settings
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_clk.kernel_clk/kernel_clk.clk_in: kernel_clk.clk_in requires 50000000Hz, but source has frequency of 0Hz
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_interface: acl_kernel_interface.acl_bsp_memorg_host0x018 must be exported, or connected to a matching conduit.
+2017.04.10.16:19:38 Warning: system.acl_iface.acl_kernel_clk: acl_kernel_clk.ctrl must be connected to an Avalon-MM master
+2017.04.10.16:19:38 Warning: system.acl_iface: acl_iface.acl_internal_memorg_kernel must be exported, or connected to a matching conduit.
+2017.04.10.16:19:38 Warning: system.acl_iface: acl_iface.acl_kernel_clk_kernel_pll_locked must be exported, or connected to a matching conduit.
+2017.04.10.16:19:38 Info: system: Generating system "system" for QUARTUS_SYNTH
+2017.04.10.16:19:49 Info: Interconnect is inserted between master ErrorDiffusion_system.avm_memgmem0_port_0_0_rw and slave acl_iface.kernel_mem0 because the master has address signal 30 bit wide, but the slave is 25 bit wide.
+2017.04.10.16:19:49 Info: Interconnect is inserted between master acl_iface.kernel_cra and slave cra_root.cra_slave because the master has burstcount signal 1 bit wide, but the slave is 0 bit wide.
+2017.04.10.16:19:49 Info: Interconnect is inserted between master acl_iface.kernel_cra and slave cra_root.cra_slave because the master has address signal 30 bit wide, but the slave is 4 bit wide.
+2017.04.10.16:19:49 Info: Interconnect is inserted between master acl_iface.kernel_cra and slave cra_root.cra_slave because the master has debugaccess signal 1 bit wide, but the slave is 0 bit wide.
+2017.04.10.16:19:59 Info: ErrorDiffusion_system: "system" instantiated ErrorDiffusion_system "ErrorDiffusion_system"
+2017.04.10.16:20:02 Info: Interconnect is inserted between master address_span_extender_kernel.expanded_master and slave hps.f2h_sdram0_data because the master has address signal 32 bit wide, but the slave is 27 bit wide.
+2017.04.10.16:20:02 Info: Interconnect is inserted between master address_span_extender_kernel.expanded_master and slave hps.f2h_sdram0_data because the master has burstcount signal 5 bit wide, but the slave is 8 bit wide.
+2017.04.10.16:20:03 Info: Interconnect is inserted between master hps.h2f_lw_axi_master and slave pipe_stage_host_ctrl.s0 because the master is of type axi and the slave is of type avalon.
+2017.04.10.16:20:04 Info: Interconnect is inserted between master clock_cross_kernel_mem1.m0 and slave address_span_extender_kernel.windowed_slave because the master has debugaccess signal 1 bit wide, but the slave is 0 bit wide.
+2017.04.10.16:20:04 Warning: hps.f2h_irq0: Cannot connect clock for irq_mapper.sender
+2017.04.10.16:20:04 Warning: hps.f2h_irq0: Cannot connect reset for irq_mapper.sender
+2017.04.10.16:20:04 Warning: hps.f2h_irq1: Cannot connect clock for irq_mapper_001.sender
+2017.04.10.16:20:04 Warning: hps.f2h_irq1: Cannot connect reset for irq_mapper_001.sender
+2017.04.10.16:20:09 Info: acl_iface: "system" instantiated acl_iface_system "acl_iface"
+2017.04.10.16:20:09 Info: avs_errorDiffusion_cra_cra_ring: "system" instantiated cra_ring_node "avs_errorDiffusion_cra_cra_ring"
+2017.04.10.16:20:09 Info: cra_root: "system" instantiated cra_ring_root "cra_root"
+2017.04.10.16:20:09 Info: mm_interconnect_0: "system" instantiated altera_mm_interconnect "mm_interconnect_0"
+2017.04.10.16:20:10 Info: mm_interconnect_2: "system" instantiated altera_mm_interconnect "mm_interconnect_2"
+2017.04.10.16:20:10 Info: irq_mapper: "system" instantiated altera_irq_mapper "irq_mapper"
+2017.04.10.16:20:10 Info: rst_controller: "system" instantiated altera_reset_controller "rst_controller"
+2017.04.10.16:20:10 Info: Inserting clock-crossing logic between cmd_demux.src1 and cmd_mux_001.sink0
+2017.04.10.16:20:11 Info: Inserting clock-crossing logic between rsp_demux_001.src0 and rsp_mux.sink1
+2017.04.10.16:20:12 Info: acl_kernel_clk: "acl_iface" instantiated acl_kernel_clk_noreconfig "acl_kernel_clk"
+2017.04.10.16:20:12 Info: Interconnect is inserted between master address_span_extender_0.expanded_master and slave kernel_cra.s0 because the master has readdata signal 32 bit wide, but the slave is 64 bit wide.
+2017.04.10.16:20:12 Info: Interconnect is inserted between master address_span_extender_0.expanded_master and slave kernel_cra.s0 because the master has writedata signal 32 bit wide, but the slave is 64 bit wide.
+2017.04.10.16:20:12 Info: Interconnect is inserted between master address_span_extender_0.expanded_master and slave kernel_cra.s0 because the master has byteenable signal 4 bit wide, but the slave is 8 bit wide.
+2017.04.10.16:20:14 Info: Inserting clock-crossing logic between cmd_demux.src0 and cmd_mux.sink0
+2017.04.10.16:20:14 Info: Inserting clock-crossing logic between cmd_demux.src1 and cmd_mux_001.sink0
+2017.04.10.16:20:14 Info: Inserting clock-crossing logic between rsp_demux.src0 and rsp_mux.sink0
+2017.04.10.16:20:14 Info: Inserting clock-crossing logic between rsp_demux_001.src0 and rsp_mux.sink1
+2017.04.10.16:20:15 Warning: irq_ena_0.my_irq_in: Cannot connect clock for irq_mapper.sender
+2017.04.10.16:20:15 Warning: irq_ena_0.my_irq_in: Cannot connect reset for irq_mapper.sender
+2017.04.10.16:20:16 Info: acl_kernel_interface: "acl_iface" instantiated acl_kernel_interface_soc "acl_kernel_interface"
+2017.04.10.16:20:16 Info: address_span_extender_kernel: "acl_iface" instantiated altera_address_span_extender "address_span_extender_kernel"
+2017.04.10.16:20:16 Info: clock_cross_kernel_mem1: "acl_iface" instantiated altera_avalon_mm_clock_crossing_bridge "clock_cross_kernel_mem1"
+2017.04.10.16:20:16 Info: hps: "Running  for module: hps"
+2017.04.10.16:20:17 Info: hps: HPS Main PLL counter settings: n = 0  m = 63
+2017.04.10.16:20:18 Info: hps: HPS peripherial PLL counter settings: n = 0  m = 39
+2017.04.10.16:20:19 Info: hps: "acl_iface" instantiated altera_hps "hps"
+2017.04.10.16:20:19 Info: pipe_stage_host_ctrl: "acl_iface" instantiated altera_avalon_mm_bridge "pipe_stage_host_ctrl"
+2017.04.10.16:20:19 Info: pll: "acl_iface" instantiated altera_pll "pll"
+2017.04.10.16:20:19 Info: version_id: "acl_iface" instantiated version_id "version_id"
+2017.04.10.16:20:19 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:19 Info: mm_interconnect_0: "acl_iface" instantiated altera_mm_interconnect "mm_interconnect_0"
+2017.04.10.16:20:19 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:19 Info: mm_interconnect_1: "acl_iface" instantiated altera_mm_interconnect "mm_interconnect_1"
+2017.04.10.16:20:20 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:20 Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:20 Info: mm_interconnect_2: "acl_iface" instantiated altera_mm_interconnect "mm_interconnect_2"
+2017.04.10.16:20:20 Info: mm_interconnect_3: "acl_iface" instantiated altera_mm_interconnect "mm_interconnect_3"
+2017.04.10.16:20:20 Info: irq_mapper: "acl_iface" instantiated altera_irq_mapper "irq_mapper"
+2017.04.10.16:20:20 Info: irq_mapper_001: "acl_iface" instantiated altera_irq_mapper "irq_mapper_001"
+2017.04.10.16:20:20 Info: ErrorDiffusion_system_avm_memgmem0_port_0_0_rw_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "ErrorDiffusion_system_avm_memgmem0_port_0_0_rw_translator"
+2017.04.10.16:20:20 Info: acl_iface_kernel_mem0_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "acl_iface_kernel_mem0_translator"
+2017.04.10.16:20:20 Info: kernel_pll: "acl_kernel_clk" instantiated altera_pll "kernel_pll"
+2017.04.10.16:20:20 Info: counter: "acl_kernel_clk" instantiated acl_timer "counter"
+2017.04.10.16:20:20 Info: global_routing_kernel_clk: "acl_kernel_clk" instantiated global_routing_clk "global_routing_kernel_clk"
+2017.04.10.16:20:20 Info: pll_sw_reset: "acl_kernel_clk" instantiated sw_reset "pll_sw_reset"
+2017.04.10.16:20:20 Info: pll_lock_avs_0: "acl_kernel_clk" instantiated pll_lock_avs "pll_lock_avs_0"
+2017.04.10.16:20:20 Info: pll_rom: Starting RTL generation for module 'system_acl_iface_acl_kernel_clk_pll_rom'
+2017.04.10.16:20:20 Info: pll_rom:   Generation command is [exec /scratch/altera/16.0/quartus/linux64/perl/bin/perl -I /scratch/altera/16.0/quartus/linux64/perl/lib -I /scratch/altera/16.0/quartus/sopc_builder/bin/europa -I /scratch/altera/16.0/quartus/sopc_builder/bin/perl_lib -I /scratch/altera/16.0/quartus/sopc_builder/bin -I /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/common -I /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=system_acl_iface_acl_kernel_clk_pll_rom --dir=/tmp/alt7266_2006733778194792060.dir/0016_pll_rom_gen/ --quartus_dir=/scratch/altera/16.0/quartus --verilog --config=/tmp/alt7266_2006733778194792060.dir/0016_pll_rom_gen//system_acl_iface_acl_kernel_clk_pll_rom_component_configuration.pl  --do_build_sim=0  ]
+2017.04.10.16:20:20 Info: pll_rom: Done RTL generation for module 'system_acl_iface_acl_kernel_clk_pll_rom'
+2017.04.10.16:20:20 Info: pll_rom: "acl_kernel_clk" instantiated altera_avalon_onchip_memory2 "pll_rom"
+2017.04.10.16:20:20 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:21 Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:21 Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:21 Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:21 Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:21 Info: mm_interconnect_0: "acl_kernel_clk" instantiated altera_mm_interconnect "mm_interconnect_0"
+2017.04.10.16:20:21 Info: sys_description_rom: Starting RTL generation for module 'system_acl_iface_acl_kernel_interface_sys_description_rom'
+2017.04.10.16:20:21 Info: sys_description_rom:   Generation command is [exec /scratch/altera/16.0/quartus/linux64/perl/bin/perl -I /scratch/altera/16.0/quartus/linux64/perl/lib -I /scratch/altera/16.0/quartus/sopc_builder/bin/europa -I /scratch/altera/16.0/quartus/sopc_builder/bin/perl_lib -I /scratch/altera/16.0/quartus/sopc_builder/bin -I /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/common -I /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /scratch/altera/16.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=system_acl_iface_acl_kernel_interface_sys_description_rom --dir=/tmp/alt7266_2006733778194792060.dir/0017_sys_description_rom_gen/ --quartus_dir=/scratch/altera/16.0/quartus --verilog --config=/tmp/alt7266_2006733778194792060.dir/0017_sys_description_rom_gen//system_acl_iface_acl_kernel_interface_sys_description_rom_component_configuration.pl  --do_build_sim=0  ]
+2017.04.10.16:20:21 Info: sys_description_rom: Done RTL generation for module 'system_acl_iface_acl_kernel_interface_sys_description_rom'
+2017.04.10.16:20:21 Info: sys_description_rom: "acl_kernel_interface" instantiated altera_avalon_onchip_memory2 "sys_description_rom"
+2017.04.10.16:20:21 Info: mem_org_mode: "acl_kernel_interface" instantiated mem_org_mode "mem_org_mode"
+2017.04.10.16:20:21 Info: irq_bridge_0: "acl_kernel_interface" instantiated altera_irq_bridge "irq_bridge_0"
+2017.04.10.16:20:21 Info: irq_ena_0: "acl_kernel_interface" instantiated acl_irq_ena "irq_ena_0"
+2017.04.10.16:20:22 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:22 Info: mm_interconnect_0: "acl_kernel_interface" instantiated altera_mm_interconnect "mm_interconnect_0"
+2017.04.10.16:20:22 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_005: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: avalon_st_adapter_006: Inserting error_adapter: error_adapter_0
+2017.04.10.16:20:23 Info: mm_interconnect_1: "acl_kernel_interface" instantiated altera_mm_interconnect "mm_interconnect_1"
+2017.04.10.16:20:24 Info: fpga_interfaces: "hps" instantiated altera_interface_generator "fpga_interfaces"
+2017.04.10.16:20:24 Info: hps_io: "hps" instantiated altera_hps_io "hps_io"
+2017.04.10.16:20:24 Info: address_span_extender_kernel_expanded_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "address_span_extender_kernel_expanded_master_agent"
+2017.04.10.16:20:24 Info: hps_f2h_sdram0_data_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "hps_f2h_sdram0_data_agent"
+2017.04.10.16:20:24 Info: hps_f2h_sdram0_data_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "hps_f2h_sdram0_data_agent_rsp_fifo"
+2017.04.10.16:20:24 Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+2017.04.10.16:20:24 Info: hps_h2f_lw_axi_master_agent: "mm_interconnect_1" instantiated altera_merlin_axi_master_ni "hps_h2f_lw_axi_master_agent"
+2017.04.10.16:20:24 Info: router: "mm_interconnect_1" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_002: "mm_interconnect_1" instantiated altera_merlin_router "router_002"
+2017.04.10.16:20:24 Info: pipe_stage_host_ctrl_s0_burst_adapter: "mm_interconnect_1" instantiated altera_merlin_burst_adapter "pipe_stage_host_ctrl_s0_burst_adapter"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_address_alignment.sv
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: rsp_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "rsp_demux"
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: avalon_st_adapter: "mm_interconnect_1" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+2017.04.10.16:20:24 Info: router: "mm_interconnect_2" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_001: "mm_interconnect_2" instantiated altera_merlin_router "router_001"
+2017.04.10.16:20:24 Info: pipe_stage_host_ctrl_m0_limiter: "mm_interconnect_2" instantiated altera_merlin_traffic_limiter "pipe_stage_host_ctrl_m0_limiter"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_avalon_sc_fifo.v
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_avalon_st_pipeline_base.v
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_2" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_2" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: rsp_demux: "mm_interconnect_2" instantiated altera_merlin_demultiplexer "rsp_demux"
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_2" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+2017.04.10.16:20:24 Info: rsp_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_001"
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: async_fifo: "mm_interconnect_0" instantiated altera_avalon_dc_fifo "async_fifo"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_avalon_dc_fifo.v
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_dcfifo_synchronizer_bundle.v
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_std_synchronizer_nocut.v
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_avalon_dc_fifo.sdc
+2017.04.10.16:20:24 Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: kernel_cra_s0_cmd_width_adapter: "mm_interconnect_0" instantiated altera_merlin_width_adapter "kernel_cra_s0_cmd_width_adapter"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_address_alignment.sv
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+2017.04.10.16:20:24 Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+2017.04.10.16:20:24 Info: router: "mm_interconnect_1" instantiated altera_merlin_router "router"
+2017.04.10.16:20:24 Info: router_001: "mm_interconnect_1" instantiated altera_merlin_router "router_001"
+2017.04.10.16:20:24 Info: router_002: "mm_interconnect_1" instantiated altera_merlin_router "router_002"
+2017.04.10.16:20:24 Info: cmd_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "cmd_demux"
+2017.04.10.16:20:24 Info: cmd_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "cmd_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: rsp_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "rsp_demux"
+2017.04.10.16:20:24 Info: rsp_demux_002: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "rsp_demux_002"
+2017.04.10.16:20:24 Info: rsp_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "rsp_mux"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_merlin_arbitrator.sv
+2017.04.10.16:20:24 Info: crosser: "mm_interconnect_1" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_avalon_st_pipeline_base.v
+2017.04.10.16:20:24 Info: Reusing file /scratch/altera/16.0/hld/board/terasic/de1soc/mariano/opencl_printer_error_diffusion/error_diffusion/bin/ErrorDiffusion/system/synthesis/submodules/altera_std_synchronizer_nocut.v
+2017.04.10.16:20:59 Info: border: "hps_io" instantiated altera_interface_generator "border"
+2017.04.10.16:20:59 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+2017.04.10.16:20:59 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+2017.04.10.16:20:59 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+2017.04.10.16:20:59 Info: system: Done "system" with 93 modules, 218 files

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2013-2017 Altera Corporation, San Jose, California, USA. All rights reserved.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to
+whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+This agreement shall be governed in all respects by the laws of the State of California and
+by the laws of the United States of America.
+-->
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Error Diffusion: Intel FPGA&reg; OpenCL&trade; Design Example</title>
+<link rel="stylesheet" href="../common/readme.css" type="text/css">
+</head>
+<body>
+<h1>
+<div class="preheading">Intel FPGA<sup>&reg;</sup> OpenCL&trade; Design Example</div>
+Error Diffusion
+</h1>
+
+<p>This readme file for the Error Diffusion OpenCL Design Example contains
+information about the design example package. For more examples, please
+visit the <a href="https://www.altera.com/products/design-software/embedded-software-developers/opencl/developer-zone.html">Intel FPGA OpenCL Design Examples page</a>.</p>
+<nav>
+<h2>Contents</h2>
+<ul>
+<li><a href="#Description">Description</a></li>
+<li><a href="#Software_Hardware_Requirements">Software &amp; Hardware Requirements</a></li>
+<li><a href="#Package_Contents">Package Contents</a></li>
+<li><a href="#Compiling_the_OpenCL_Kernel">Compiling the OpenCL Kernel</a></li>
+<li><a href="#Compiling_the_Host_Program">Compiling the Host Program</a></li>
+<li><a href="#Running_the_Host_Program">Running the Host Program</a></li>
+<li><a href="#Release_History">Release History</a></li>
+<li><a href="#Legal">Legal</a></li>
+<li><a href="#Contacting_Intel">Contacting Intel</a></li>
+</ul>
+</nav>
+<section>
+<a id="Description"><h2>Description</h2></a>
+<p>This design is part of core printer pipeline, as described in 
+      <a href="http://www.altera.com/literature/wp/wp-01223-ieee-fpga-acceleration-of-multifunction-printer-image-processing.pdf">
+      FPGA Acceleration of Multifunction Printer Image Processing Using OpenCL</a>.</p><p>The error diffusion kernel takes a 600dpi letter-sized CMYK image
+      and produces an equivalent image with every pixel half-toned. Such
+      an output is the final stage of image processing inside a printer before
+      it is send to the laser system. The actual algorithm implemented is
+      a variant of the well-known Floyd Steinberg error diffusion algorithm 
+      with modified coefficients for arithmetic simplicity. See the white paper
+      above for much more details on this algorithm, and the overall 
+      Multifunction Printer system.</p>
+</section>
+
+<section>
+<a id="Software_Hardware_Requirements"><h2>Software &amp; Hardware Requirements</h2></a>
+<p/>
+<table class="reqs">
+<thead>
+<tr>
+  <th rowspan="3">Requirement</th>
+  <th rowspan="3">Version</th>
+<th colspan="2">OpenCL Kernel</th><th colspan="4">Host Program</th></tr><tr><th rowspan="2">Hardware<br/>Compile</th><th rowspan="2">Emulation<br/>Compile</th><th colspan="2">Hardware</th><th colspan="2">Emulation</th></tr><tr><th>Compile</th><th>Run</th><th>Compile</th><th>Run</th></tr></thead><tbody><tr><td>Quartus Prime Design Software <small>(Quartus II)</small></td><td>16.1 or later</td><td class="req">&#x02713;</td><td class="req">&#x02713;</td><td></td><td></td><td class="unsupported" rowspan="8" colspan="2">Emulation is not supported on the ARM processor. To use emulation, please use an example design package suitable for your development environment.</td></tr><tr><td>Intel(R) FPGA SDK for OpenCL(TM)</td><td>16.1 or later</td><td class="req">&#x02713;</td><td class="req">&#x02713;</td><td class="req" rowspan="2">&#x02713;<div class="either">(either)</div></td><td></td></tr><tr><td>Intel(R) FPGA Runtime Environment for OpenCL(TM)</td><td>16.1 or later</td><td></td><td></td><td class="req">&#x02713;</td></tr><tr><td>Board Support Package</td><td>16.1-compatible</td><td class="req">&#x02713;</td><td class="req">&#x02713;</td><td class="req">&#x02713;</td><td class="req">&#x02713;</td></tr><tr><td>Board Hardware</td><td>-</td><td></td><td></td><td></td><td class="req">&#x02713;</td></tr><tr><td>Altera SoC Embedded Design Suite <small>(ARM cross-compiler)</small></td><td>16.1</td><td></td><td></td><td class="req">&#x02713;</td><td class="req">&#x02713;</td></tr><tr><td>GNU Make</td><td>3.8.1 or later</td><td></td><td></td><td class="req">&#x02713;</td><td></td></tr><tr><td>LibTIFF - TIFF Library and Utilities<sup><a class="note" href="#req-note-1">(1)</a></sup></td><td>4.0.3</td><td></td><td></td><td class="req">&#x02713;</td><td class="req">&#x02713;</td></tr></tbody>
+</table>
+<h3>Notes</h3><ol class="req-notes"><li><a id="req-note-1"/>The LibTIFF - TIFF Library and Utilities is included as part of this example design package.</li></ol>
+</section>
+
+<section>
+<a id="Package_Contents"><h2>Package Contents</h2></a>
+<p/>
+<table class="pkg-contents">
+<thead>
+<tr>
+  <th class="path">Path</th>
+  <th class="desc">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="path"><a href="./" style="padding-left: 0.0ex">error_diffusion/</a></td>
+  <td class="desc"></td>
+</tr>
+<tr>
+  <td class="path"><a href="./Makefile" style="padding-left: 2.0ex">Makefile</a></td>
+  <td class="desc">Makefile for host program</td>
+</tr>
+<tr>
+  <td class="path"><a href="./bin/" style="padding-left: 2.0ex">bin/</a></td>
+  <td class="desc">Host data files, Host program, AOCX files</td>
+</tr>
+<tr>
+  <td class="path"><a href="./device/" style="padding-left: 2.0ex">device/</a></td>
+  <td class="desc">OpenCL kernel files</td>
+</tr>
+<tr>
+  <td class="path"><a href="./device/ErrorDiffusion.cl" style="padding-left: 4.0ex">ErrorDiffusion.cl</a></td>
+  <td class="desc">Top-level OpenCL kernel file</td>
+</tr>
+<tr>
+  <td class="path"><a href="./host/" style="padding-left: 2.0ex">host/</a></td>
+  <td class="desc"></td>
+</tr>
+<tr>
+  <td class="path"><a href="./host/inc/" style="padding-left: 4.0ex">inc/</a></td>
+  <td class="desc">Host include files</td>
+</tr>
+<tr>
+  <td class="path"><a href="./host/src/" style="padding-left: 4.0ex">src/</a></td>
+  <td class="desc">Host source files</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+
+<section>
+<a id="Compiling_the_OpenCL_Kernel"><h2>Compiling the OpenCL Kernel</h2></a>
+    <p>The top-level OpenCL kernel file is <span class="mono">device/ErrorDiffusion.cl</span>.</p>
+    <p>To compile the OpenCL kernel, run:</p>
+    <div class="command">aoc device/ErrorDiffusion.cl <span class="nowrap">-o</span> bin/ErrorDiffusion.aocx --board <span class="highlight">&lt;<i>board</i>&gt;</span></div>
+    <p>where <span class="highlight mono">&lt;<i>board</i>&gt;</span> matches the board you want to target.
+    The <span class="mono">-o bin/ErrorDiffusion.aocx</span> argument is used to place the compiled binary
+    in the location that the host program expects.
+    </p>
+Do not target <span class="mono">c5soc_sharedonly</span> board, only <span class="mono">c5soc</span>.<p>If you are unsure of the boards available, use the following command to list
+available boards:</p>
+<div class="command">aoc --list-boards</div>
+
+</section>
+
+<section>
+<a id="Compiling_the_Host_Program"><h2>Compiling the Host Program</h2></a>
+<p>To compile the host program, run:</p>
+<div class="command">make</div>
+<p>The compiled host program will be located at <span class="mono">bin/host</span>.</p>
+
+</section>
+
+<section>
+<a id="Running_the_Host_Program"><h2>Running the Host Program</h2></a>
+<p>Before running the host program, you should have compiled the OpenCL kernel and the host program. Refer to the above sections if you have not completed those steps.</p>
+<p>To run the host program on hardware, execute:</p>
+<div class="command">LD_LIBRARY_PATH=../extlibs/lib:$LD_LIBRARY_PATH bin/host <span class="nowrap">-i</span> <span class="nowrap">testCMYK600dpi.tif</span> <span class="nowrap">-o</span> <span class="nowrap">out.tif</span> <span class="nowrap">-r</span> <span class="nowrap">-v</span></div>
+<p>Please note that the command includes directives to modify the environment to point to 
+external libraries needed by the host program.</p>
+<section>
+<h3>Host Parameters</h3>
+<p>The general command-line for the host program is:</p>
+<div class="command">bin/host <span class="nowrap">-<span class="highlight">i</span> &lt;<i>file</i>&gt;</span> <span class="nowrap">[-<span class="highlight">o</span> &lt;<i>file</i>&gt;]</span> <span class="nowrap">[-<span class="highlight">p</span>=&lt;<i>aocx file</i>&gt;]</span> <span class="nowrap">[-<span class="highlight">r</span>]</span> <span class="nowrap">[-<span class="highlight">v</span>]</span></div>
+<p>where the parameters are:</p>
+<table class="host-params parameters">
+<thead>
+<tr>
+  <th class="name">Parameter</th>
+  <th class="type">Type</th>
+  <th class="default">Default</th>
+  <th class="desc">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="name">-<span class="highlight">i</span> &lt;<i>file</i>&gt;</td>
+  <td class="type">Required</td>
+  <td class="default"></td>
+  <td class="desc">
+          Input image. Expected to be a CMYK TIFF file. Path is relative to location
+          of host executable.
+        </td>
+</tr>
+<tr>
+  <td class="name">-<span class="highlight">o</span> &lt;<i>file</i>&gt;</td>
+  <td class="type">Optional</td>
+  <td class="default"></td>
+  <td class="desc">
+          Output image file. Also will be a TIFF file. Path is relative to location
+          of host executable.
+        </td>
+</tr>
+<tr>
+  <td class="name">-<span class="highlight">p</span>=&lt;<i>aocx file</i>&gt;</td>
+  <td class="type">Optional</td>
+  <td class="default"></td>
+  <td class="desc">
+          AOCX file to load. Path is relative to location of host executable.
+          If not specified, will use <span class="mono">ErrorDiffusion.aocx</span>.
+        </td>
+</tr>
+<tr>
+  <td class="name">-<span class="highlight">r</span></td>
+  <td class="type">Optional</td>
+  <td class="default"></td>
+  <td class="desc">
+          Enable report output.
+        </td>
+</tr>
+<tr>
+  <td class="name">-<span class="highlight">v</span></td>
+  <td class="type">Optional</td>
+  <td class="default"></td>
+  <td class="desc">
+          Enable verbose output.
+        </td>
+</tr>
+</tbody>
+</table>
+</section>
+<section>
+<h3>OpenCL Binary Selection</h3>
+The host program requires a OpenCL binary (AOCX) file to run. The binary file
+        should be placed at <span class="mono">bin/ErrorDiffusion.aocx</span>. Alternatively, use the <span class="mono">-p</span> option to specify the AOCX file to use.
+</section>
+
+<section>
+<a id="Release_History"><h2>Release History</h2></a>
+<p/>
+<table class="history">
+<thead>
+<tr>
+  <th class="version">Example Version</th>
+  <th class="sdk-version">SDK Version</th>
+  <th class="date">Date</th>
+  <th class="changes">Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="version">1.1</td>
+  <td class="sdk-version">16.0</td>
+  <td class="date">June 2016</td>
+  <td class="changes"><ul><li>Fixed makefile.</li></ul></td>
+</tr>
+<tr>
+  <td class="version">1.0</td>
+  <td class="sdk-version">14.1</td>
+  <td class="date">December 2014</td>
+  <td class="changes"><ul><li>First release.</li></ul></td>
+</tr>
+</tbody>
+</table>
+
+</section>
+
+<section>
+<a id="Legal"><h2>Legal</h2></a>
+<pre class="license">Copyright (C) 2013-2017 Altera Corporation, San Jose, California, USA. All rights reserved.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to
+whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+This agreement shall be governed in all respects by the laws of the State of California and
+by the laws of the United States of America.
+</pre><section>
+<h3>LibTIFF</h3>
+<div class="license">
+<pre>Copyright (c) 1988-1997 Sam Leffler
+Copyright (c) 1991-1997 Silicon Graphics, Inc.
+
+Permission to use, copy, modify, distribute, and sell this software and 
+its documentation for any purpose is hereby granted without fee, provided
+that (i) the above copyright notices and this permission notice appear in
+all copies of the software and related documentation, and (ii) the names of
+Sam Leffler and Silicon Graphics may not be used in any advertising or
+publicity relating to the software without the specific, prior written
+permission of Sam Leffler and Silicon Graphics.
+
+THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY 
+WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  
+
+IN NO EVENT SHALL SAM LEFFLER OR SILICON GRAPHICS BE LIABLE FOR
+ANY SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND,
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER OR NOT ADVISED OF THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF 
+LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE 
+OF THIS SOFTWARE.
+</pre>
+</div>
+</section>
+<section><h3>Trademarks</h3><div class="trademark"><p>OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</p><p>Product is based on a published Khronos Specification, and has passed the Khronos Conformance Testing Process. Current conformance status can be found at <a href="www.khronos.org/conformance">www.khronos.org/conformance</a>.</p></div></section>
+</section>
+
+<section>
+<a id="Contacting_Intel"><h2>Contacting Intel</h2></a>
+<p>Although we have made every effort to ensure that this design example works
+correctly, there might be problems that we have not encountered. If you have
+a question or problem that is not answered by the information provided in 
+this readme file or the example's documentation, please contact Intel
+support (<a href="http://www.altera.com/myaltera">myAltera</a>).</p>
+
+</section>
+
+</body>
+</html>

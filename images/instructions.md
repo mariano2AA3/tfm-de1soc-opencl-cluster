@@ -21,6 +21,8 @@ And then, you can simply unzip:
  unzip Linux_debian8_3.13_OpenCLRTE16_marianoh_v2.zip
 ```
 
+You can download it from [Google drive](https://drive.google.com/file/d/0B-BQyYk2LABRekxRNk9lUWF3OTQ/view?usp=sharing)
+
 
 ### 2) copy img file to microSD
 

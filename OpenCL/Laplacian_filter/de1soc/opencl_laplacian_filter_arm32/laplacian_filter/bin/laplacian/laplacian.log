@@ -1,0 +1,42 @@
+=========================================================================================================
+                                   *** Optimization Report ***                                        
+ Warning: Compile with "-g" to get line number, variable name, and additional loop information         
+
+Kernels that do not use any work-item built-in functions, such as get_global_id(), are compiled for single
+work-item execution (a task). Otherwise, a kernel is compiled as an ND-Range.
+
+For tasks, the compiler will attempt to pipeline every loop in the kernel to allow multiple iterations of
+the loop to execute concurrently. If some loops are not pipelined, or not pipelined well, you may not get
+good performance.
+
+For ND-Range kernels, the loops are not pipelined. Instead, they are built to accept multiple work-items
+simultaneously. Kernel throughput is usually reduced by the largest total number of iterations of nested
+loops. A large number of threads is usually required to efficiently utilize ND-Range kernels.
+
+=========================================================================================================
+Kernel: laplacian                                                                                        
+=========================================================================================================
+The kernel is compiled for single work-item execution.
+
+Loop Report:
+
+ + Loop "Block1"
+   Pipelined well. Successive iterations are launched every cycle.
+   
+   
+=========================================================================================================
+
++--------------------------------------------------------------------+
+; Estimated Resource Usage Summary                                   ;
++----------------------------------------+---------------------------+
+; Resource                               + Usage                     ;
++----------------------------------------+---------------------------+
+; Logic utilization                      ;   16%                     ;
+; ALUTs                                  ;    9%                     ;
+; Dedicated logic registers              ;    7%                     ;
+; Memory blocks                          ;   12%                     ;
+; DSP blocks                             ;    0%                     ;
++----------------------------------------+---------------------------;
+System name: laplacian
+
+2017.04.30.17:39:48 Info: Doing: <b>qsys-script --script=system.tcl --Xmx512M --XX:+UseSerialGC --system-file=system.qsys</b>
